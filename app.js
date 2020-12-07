@@ -5,6 +5,7 @@ const CarLeave = require('./models/leave.js');
 const CarParkOption1 = require('./models/option1.js');
 const CarParkOption2 = require('./models/option2.js');
 const CarParkOption3 = require('./models/option3.js');
+
 //express app
 
 const app = express();
@@ -12,12 +13,14 @@ var slots = [];
 var i;
 var carSlt;
 
+//initialising 1000 car slots
 for(i=0;i<1000;i++)
 {
   slots[i]=0;
 }
 
-//connect to MongoDB
+//connect to MongoDB through mongoose
+//listening to local server on port 3000
 const dbURI = 'mongodb+srv://rajeevsrisai:test1234@cluster0.4j6rq.mongodb.net/parking?retryWrites=true&w=majority';
 mongoose.connect(dbURI,{useNewUrlParser: true,useUnifiedTopology: true})
 .then((result) => app.listen(3000))
@@ -28,24 +31,8 @@ mongoose.connect(dbURI,{useNewUrlParser: true,useUnifiedTopology: true})
 app.set('view engine','ejs');
 app.set('views','webPages');
 
+//list of all cars in the parking lot
 
-//mongoose testing
-// app.get('/add-car',(req,res)=>{
-//   const carPark = CarPark({
-//     carNumber : 'AP31 3756',
-//     carColor : 'White',
-//     carSlot : 27
-//   });
-//
-//   carPark.save()
-//   .then((result)=>{
-//     res.send(result);
-//   })
-//   .catch((err)=>{
-//     console.log(err);
-//   });
-// });
-//
 app.get('/all-cars',(req,res)=>{
   CarPark.find()
   .then((result)=>{
@@ -56,44 +43,41 @@ app.get('/all-cars',(req,res)=>{
   });
 });
 
-//middleware
+//middleware encoding URL
 app.use(express.urlencoded({extended:true}));
 
 
+//entry page hosted on local server
 
 app.get('/',(req,res) => {
-
-  //res.send(/test/firstWebPage.html);
-  //res.sendFile('./webPages/firstWebPage.html',{root: __dirname});
   res.render('openingPage',{title:'Home'});
 });
-app.get('/customer',(req,res) => {
 
-  //res.send(/test/firstWebPage.html);
-  //res.sendFile('./webPages/firstWebPage.html',{root: __dirname});
+//Customer Page
+
+app.get('/customer',(req,res) => {
   res.render('customer',{title:'Customer'});
 });
 
-app.get('/owner',(req,res) => {
+//Owner Page
 
-  //res.send(/test/firstWebPage.html);
-  //res.sendFile('./webPages/firstWebPage.html',{root: __dirname});
+app.get('/owner',(req,res) => {
   res.render('owner',{title:'Owner'});
 });
 
-app.get('/park',(req,res) => {
+//Parking Page
 
-  //res.send(/test/firstWebPage.html);
-  //res.sendFile('./webPages/firstWebPage.html',{root: __dirname});
+app.get('/park',(req,res) => {
   res.render('park',{title:'Parking'});
 });
 
-app.get('/leave',(req,res) => {
+//Leaving Page
 
-  //res.send(/test/firstWebPage.html);
-  //res.sendFile('./webPages/firstWebPage.html',{root: __dirname});
+app.get('/leave',(req,res) => {
   res.render('leave',{title:'Leaving'});
 });
+
+//Receiving data from Parking page
 
 app.post('/park',(req,res) => {
   for(carSlt=0;carSlt<1000;carSlt++)
@@ -106,10 +90,7 @@ app.post('/park',(req,res) => {
   }
   const carPark = CarPark(req.body);
   carPark.carSlot = carSlt;
-  slot = carPark.carSlot;
-  console.log(slot);
 
-  //console.log(carPark);
     carPark.save()
     .then((result)=>{
       res.redirect('/');
@@ -119,19 +100,17 @@ app.post('/park',(req,res) => {
     });
 });
 
-app.get('/leave',(req,res) => {
 
-  //res.send(/test/firstWebPage.html);
-  //res.sendFile('./webPages/firstWebPage.html',{root: __dirname});
-  res.render('leave',{title:'Leaving'});
-});
+//Receiving data from Leaving page
+
 app.post('/leave',(req,res) => {
 
   const carLeave = CarLeave(req.body);
 
 
   carnum = carLeave.carNumber;
-  slots[carLeave.carSlot]=0;
+  //slots[carLeave.carSlot]=0;
+  //Removing data of cars that leave parking area
   CarPark.remove({ carNumber: carnum }, function(err, result) {
   if (err) {
     console.err(err);
@@ -141,25 +120,19 @@ app.post('/leave',(req,res) => {
 });
 });
 
-
+//Option pages for the Owner/Government
 app.get('/option1',(req,res) => {
-
-  //res.send(/test/firstWebPage.html);
-  //res.sendFile('./webPages/firstWebPage.html',{root: __dirname});
   res.render('option1',{title:'Option1'});
 });
 app.get('/option2',(req,res) => {
-
-  //res.send(/test/firstWebPage.html);
-  //res.sendFile('./webPages/firstWebPage.html',{root: __dirname});
   res.render('option2',{title:'Option2'});
 });
 app.get('/option3',(req,res) => {
-
-  //res.send(/test/firstWebPage.html);
-  //res.sendFile('./webPages/firstWebPage.html',{root: __dirname});
   res.render('option3',{title:'Option3'});
 });
+
+
+//Receiving data from Option pages
 
 app.post('/option2',(req,res)=>{
   const carPark = CarParkOption2(req.body);
@@ -199,7 +172,7 @@ app.post('/option3',(req,res)=>{
 
 
 
-//404
+//404 eroor page 
 app.use((req,res) =>{
 
   //res.status(404).sendFile('./webPages/404.html',{root: __dirname});
