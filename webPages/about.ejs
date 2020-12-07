@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- HTML Codes by Quackit.com -->
+<title>
+ Hey | <%= title %></title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="First web page created by me.">
+<style>
+h1{font-family:Arial, sans-serif;color:#000000;background-color:#ffffff;}
+p {font-family:Georgia, serif;font-size:14px;font-style:normal;font-weight:normal;color:#000000;background-color:#ffffff;}
+</style>
+</head>
+<body>
+<h1>About me</h1>
+<p>Ssup guys!?</p>
+
+<h1> This the form </h1>
+
+<div id="Parking form">
+  <form>
+    <label for="first name">First Name:</label>
+    <input type="text" name ="first name" placeholder="arya" required>
+
+    <div>
+      <label for="gender-male">Male</label>
+      <input type="radio" name="Gender" value="choice-1">
+
+        <label for="gender-male">Female</label>
+        <input type="radio" name="Gender" value="choice-2">
+
+          <label for="gender-male">Others</label>
+          <input type="radio" name="Gender" value="choice-3">
+    </div>
+
+    <button type="submit">Submit</button>
+    </form>
+</div>
+<%- include('./partials/nav.ejs') %>
+
+</body>
+</html>

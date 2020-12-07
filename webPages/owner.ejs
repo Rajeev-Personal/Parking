@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>
+My First WebPage | <%= title %></title>
+<style>
+h1{font-family:Arial, sans-serif;color:#000000;background-color:#ffffff;}
+p {font-family:Georgia, serif;font-size:14px;font-style:normal;font-weight:normal;color:#000000;background-color:#ffffff;}
+</style>
+</head>
+<body>
+  <% name = 'Rajeev' %>
+  <%= name %>
+<h1>Welcome!!</h1>
+<p>Please Select which data you would like to see</p>
+<p>Option 1: Registration numbers of all cars of a particular colour</p>
+<p>Option 2: Slot number in which a car with a given registration number is parked</p>
+<p>Option 3: Slot numbers of all slots where a car of a particular colour is parked</p>
+<div id="Parking form">
+  <button type="button" onclick="location.href='/option1';"> Option 1 </button>
+    <button type="button" onclick="location.href='/option2';"> Option 2 </button>
+      <button type="button" onclick="location.href='/option3';"> Option 3 </button>
+</div>
+
+</body>
+</html>

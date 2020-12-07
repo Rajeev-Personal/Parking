@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- HTML Codes by Quackit.com -->
+<title>
+My First WebPage | <%= title %></title>
+<style>
+h1{font-family:Arial, sans-serif;color:#000000;background-color:#ffffff;}
+p {font-family:Georgia, serif;font-size:14px;font-style:normal;font-weight:normal;color:#000000;background-color:#ffffff;}
+</style>
+</head>
+<body>
+<h1>Welcome!!</h1>
+<p>Fill in your Car Details</p>
+
+<div id="Parking form">
+  <form action="/park" method="POST">
+    <label for="carNumber">Car Number (no spaces):</label>
+    <input type="text" name ="carNumber" required>
+
+    <label for="carColor">Car color:</label>
+    <input type="text" name ="carColor" required>
+
+
+    <button type="submit">Park</button>
+    </form>
+</div>
+
+<%- include('./partials/nav.ejs') %>
+
+</body>
+</html>
